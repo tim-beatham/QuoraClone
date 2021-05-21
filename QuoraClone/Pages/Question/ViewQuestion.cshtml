@@ -39,14 +39,18 @@ else
             </i>
         </a>
 
+
         <form method="post" asp-page-handler="addQuestion"
                     class="flex-fill p-2 d-flex flex-column justify-content-center"
                     id="enter-question">
-            <input type="hidden" asp-for="UserQuestion.Username" value="@(HttpContext.Session.Get<string>("Username"))" style="display: hidden; !important" />
-            <input type="hidden" asp-for="UserQuestion.QuestionID" value="@Model.Question.QuestionID" style="display: hidden; !important" />
+            <input type="hidden" asp-for="UserQuestion.Username" value="@(HttpContext.Session.Get<string>("Username"))" />
+            <input type="hidden" asp-for="UserQuestion.QuestionID" value="@Model.Question.QuestionID"/>
             <textarea  asp-for="UserQuestion.Payload" type="text" class="flex-fill form-control" rows="10"></textarea>
             <input value="Submit Question" type="submit" class="flex-fill btn btn-primary" />
         </form>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
     </div>
 
 

@@ -51,6 +51,12 @@ namespace QuoraClone.Pages_Question
         public async Task<IActionResult> OnPostAddQuestion()
         {
             // TODO: Preferably check that the user is valid etc...
+            if (!ModelState.IsValid) 
+            {
+                OnGet(UserQuestion.QuestionID);
+                return Page();
+            }
+
             _context.UserQuestions.Add(UserQuestion);
             await _context.SaveChangesAsync();
             return RedirectToPage("ViewQuestion", new { questionID = UserQuestion.QuestionID });            

@@ -17,7 +17,7 @@
 }
 else
 {
-    <h3 class="text-center m-3">Welcome @GetUsername() </h3>
+    <h3 class="text-center m-3">Welcome <a asp-page="User">@GetUsername()</a> </h3>
     <h5 class="text-center"><a asp-page-handler="logout">Logout</a></h5>
 }
 <hr />
@@ -30,6 +30,7 @@ else
     <a href="https://www.quora.com/">Quora</a> is a site where you user's can place questions
     onto the website and other people will respond with an answer.
 </p>
+
 
 <h3 class="text-center"><a asp-page="./Question/Index">View Questions</a></h3>
 

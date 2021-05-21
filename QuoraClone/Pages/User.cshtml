@@ -1,0 +1,36 @@
+@page
+@using QuoraClone.Infrastructure;
+@using QuoraClone.Models
+@model UserModel
+
+@{
+    ViewData["title"] = "User Profile";
+}
+
+<h1 class="text-center">@(HttpContext.Session.Get<string>("Username"))</h1>
+
+
+<div class="d-flex flex-row justify-content-center m-3">
+    <div class="card">
+        <div class="card-body">
+            <h1>Number of Responses Made</h1>
+
+            <p class="text-center">@Model.AnsweredQuestions.Count()</p>
+        </div>
+    </div>
+
+</div>
+
+
+@foreach ((UserQuestion q, string title) in Model.AnsweredQuestions)
+{
+    <div class="card">
+        <div class="card-body">
+            <h3><a asp-page="Question/ViewQuestion" asp-route-questionid="@q.QuestionID">@title</a></h3>
+            <p>@q.Payload</p>
+        </div>
+    </div>
+}
+
+
+

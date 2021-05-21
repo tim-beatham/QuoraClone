@@ -33,7 +33,7 @@ namespace QuoraClone.Pages
 
         // On Post we need to check if the Username exists
         // in the database.
-        public IActionResult OnPostLogin(string redirectUrl = "")
+        public IActionResult OnPostLogin(string returnurl = "")
         {   
             // If the model that the User provided is not valid
             // then we need to make the User aware.
@@ -65,14 +65,13 @@ namespace QuoraClone.Pages
             HttpContext.Session.Set<string>("Username", User.Username);
             HttpContext.Session.Set<string>("PasswordHash", User.PasswordHash);
 
-
-            if (string.IsNullOrEmpty(redirectUrl))
+            if (string.IsNullOrEmpty(returnurl))
             {
                 return Redirect("Index");
             }
             else
             {
-                return Redirect(redirectUrl);
+                return Redirect(returnurl);
             }
 
         }

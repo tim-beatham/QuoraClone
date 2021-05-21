@@ -9,7 +9,7 @@
 
 
 <div class="container">
-    <form method="post" asp-page-handler="login" asp-route-redirecturl="@Model.ReturnUrl">
+    <form method="post" asp-page-handler="login" asp-route-returnurl="@Model.ReturnUrl">
         <div asp-validation-summary="All" class="text-danger"></div>
 
 
@@ -22,6 +22,8 @@
                 <input asp-for="User.PasswordHash" type="password" class="form-control flex-fill" placeholder="Password" />
                 <span asp-validation-for="User.PasswordHash" class="text-danger"></span>
         </div>
+
+      
 
     
         <div class="d-flex p-2 flex-column justify-content-center">

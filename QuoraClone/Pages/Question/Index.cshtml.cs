@@ -15,6 +15,7 @@ namespace QuoraClone.Pages_Question
 
         public IndexModel(QuoraClone.Models.QuoraCloneDbContext context)
         {
+     
             _context = context;
         }
 
@@ -30,9 +31,15 @@ namespace QuoraClone.Pages_Question
 
         public async Task<IActionResult> OnPostAddQuestionAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                QuestionList = await  _context.Questions.ToListAsync();
+                return Page();
+            }
+        
             _context.Questions.Add(Question);
             await _context.SaveChangesAsync();
-            return RedirectToPage("Index");
+            return RedirectToPage();
         }
     }
 }

@@ -21,21 +21,32 @@
     </tbody>
 </table>
 
-<div class="d-flex p-2 flex-column justify-content-center" id="new-question">
-    <a class="text-center btn btn-primary flex-fill" id="add-question">
-            <i class="fas fa-plus text-center">
-            </i>
-    </a>
 
-    <form method="post" asp-page-handler="addQuestion"
-                    class="flex-fill p-2 d-flex flex-column justify-content-center"
-                    id="enter-question">
-            <input type="input" asp-for="Question.QuestionTitle" type="text" class="flex-fill form-control" />
-            <input value="Submit Question" type="submit" class="flex-fill btn btn-primary" />
-    </form>
+@if (HttpContext.Session.Get<string>("Username") != default)
+{
+    <div class="d-flex p-2 flex-column justify-content-center" id="new-question">
+        <a class="text-center btn btn-primary flex-fill" id="add-question">
+                <i class="fas fa-plus text-center">
+                </i>
+        </a>
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <form method="post" asp-page-handler="addQuestion"
+                        class="flex-fill p-2 d-flex flex-column justify-content-center"
+                        id="enter-question">
+                <input type="input" asp-for="Question.QuestionTitle" type="text" class="flex-fill form-control" />
+                <input value="Submit Question" type="submit" class="flex-fill btn btn-primary" />
+        </form>
 
 
-</div>
+    </div>
+} 
+else 
+{
+    <p>Please <a asp-page="/Login" asp-route-returnurl="/Question/Index">login</a> to ask a question</p>
+}
+
 
 <script>
     $(document).ready(function() {
