@@ -1,0 +1,33 @@
+@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1 class="text-center">Login:</h1>
+
+
+<div class="container">
+    <form method="post" asp-page-handler="login" asp-route-redirecturl="@Model.ReturnUrl">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+
+        <div class="d-flex flex-column mb-3">
+            <input type="text" asp-for="User.Username" class="form-control flex-fill" placeholder="Username" />
+            <span asp-validation-for="User.Username" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex flex-column mb-3">
+                <input asp-for="User.PasswordHash" type="password" class="form-control flex-fill" placeholder="Password" />
+                <span asp-validation-for="User.PasswordHash" class="text-danger"></span>
+        </div>
+
+    
+        <div class="d-flex p-2 flex-column justify-content-center">
+            <input type="submit" value="Login" class="btn btn-primary flex-fill mb-3" />
+            <a asp-page="Create" asp-route-returnurl="@Model.ReturnUrl" class="text-center">Alternatively Create An Account</a>        
+        </div>
+    </form>
+</div>
+

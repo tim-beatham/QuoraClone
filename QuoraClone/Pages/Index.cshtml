@@ -1,0 +1,42 @@
+﻿@page
+@using QuoraClone.Infrastructure
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1 class="text-center">Welcome To The Quora Clone</h1>
+
+<hr />
+@if (GetUsername() == default)
+{
+    <h3 class="text-center m-3">You are not logged in. <a asp-page="Login" 
+        asp-route-returnUrl="/Index">
+        Login
+    </a> to interact with the community!</h3>
+}
+else
+{
+    <h3 class="text-center m-3">Welcome @GetUsername() </h3>
+    <h5 class="text-center"><a asp-page-handler="logout">Logout</a></h5>
+}
+<hr />
+
+
+<p>
+    The point of this project is to learn ASP NET. In this simple example I will create an
+    incredibly simple Quora clone.
+
+    <a href="https://www.quora.com/">Quora</a> is a site where you user's can place questions
+    onto the website and other people will respond with an answer.
+</p>
+
+<h3 class="text-center"><a asp-page="./Question/Index">View Questions</a></h3>
+
+
+@{
+    string GetUsername()
+    {
+        return HttpContext.Session.Get<string>("Username");
+    }
+}

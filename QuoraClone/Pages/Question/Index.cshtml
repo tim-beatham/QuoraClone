@@ -1,0 +1,49 @@
+@page
+@model QuoraClone.Pages_Question.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1 class="text-center">Questions</h1>
+
+
+<table class="table">
+    <tbody>
+@foreach (var item in Model.QuestionList) {
+        <tr>
+            <td>
+                <a asp-page="ViewQuestion" asp-route-questionID="@item.QuestionID">@item.QuestionTitle</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="d-flex p-2 flex-column justify-content-center" id="new-question">
+    <a class="text-center btn btn-primary flex-fill" id="add-question">
+            <i class="fas fa-plus text-center">
+            </i>
+    </a>
+
+    <form method="post" asp-page-handler="addQuestion"
+                    class="flex-fill p-2 d-flex flex-column justify-content-center"
+                    id="enter-question">
+            <input type="input" asp-for="Question.QuestionTitle" type="text" class="flex-fill form-control" />
+            <input value="Submit Question" type="submit" class="flex-fill btn btn-primary" />
+    </form>
+
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#enter-question').removeClass('d-flex').addClass('d-none');
+        $('#add-question').click(function() {
+            $('#add-question').hide();
+            $('#enter-question').removeClass('d-none').addClass('d-flex');
+        });
+    });
+</script>
+

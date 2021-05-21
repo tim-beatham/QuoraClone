@@ -1,0 +1,77 @@
+@page "{questionID}"
+@using QuoraClone.Infrastructure
+@model QuoraClone.Pages_Question.ViewQuestionModel 
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1 class="text-center">@Model.Question.QuestionTitle</h1>
+
+
+@if (!Model.Responses.Any())
+{
+    <p class="text-center">There are currently no responses!</p>
+}
+else
+{
+    @foreach (var response in Model.Responses)
+    {
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">@response.Payload</p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-text">@response.Username</h5>
+            </div>
+        </div>
+    }
+}
+
+
+
+@if(HttpContext.Session.Get<string>("Username") != default)
+{
+    <div class="d-flex p-2 flex-column justify-content-center" id="new-response">
+        <a class="text-center btn btn-primary flex-fill" id="add-question">
+            <i class="fas fa-plus text-center">
+            </i>
+        </a>
+
+        <form method="post" asp-page-handler="addQuestion"
+                    class="flex-fill p-2 d-flex flex-column justify-content-center"
+                    id="enter-question">
+            <input type="hidden" asp-for="UserQuestion.Username" value="@(HttpContext.Session.Get<string>("Username"))" style="display: hidden; !important" />
+            <input type="hidden" asp-for="UserQuestion.QuestionID" value="@Model.Question.QuestionID" style="display: hidden; !important" />
+            <textarea  asp-for="UserQuestion.Payload" type="text" class="flex-fill form-control" rows="10"></textarea>
+            <input value="Submit Question" type="submit" class="flex-fill btn btn-primary" />
+        </form>
+    </div>
+
+
+}
+else
+{
+    <p class="text-center">Please <a asp-page="/Login" asp-route-returnurl="/Question/ViewQuestion/@Model.Question.QuestionID"
+            asp-route-querystring="questionID=@Model.Question.QuestionID">login</a> to enter a response!</p>
+}
+
+
+<script>
+    // We use jquery to create a text box so that we can enter
+    // a question that we want to ask.
+    $(document).ready(function() {
+        $('#enter-question').removeClass('d-flex').addClass('d-none');
+        $('#add-question').click(function() {
+            $('#add-question').hide();
+            $('#enter-question').removeClass('d-none').addClass('d-flex');
+        });
+    });
+</script>
+
+
+
+
+
+
