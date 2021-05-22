@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using QuoraClone.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace QuoraClone.Pages_Question
 {
@@ -27,23 +24,26 @@ namespace QuoraClone.Pages_Question
         [BindProperty]
         public UserQuestion UserQuestion { get; set; }
 
-        public IActionResult OnGet(int? questionID)
+        public async Task<IActionResult> OnGet(int? questionID)
         {
             if (questionID == null)
             {
                 return NotFound();
             }
 
-            Question = _context.Questions
-                                .FirstOrDefault(q => q.QuestionID == questionID);
+            var questions = await _context.GetQuestionsAsync();
+
+            Question = questions.FirstOrDefault(q => q.QuestionID == questionID);
+            
             if (Question == null)
             {
                 return NotFound();
             }
 
-            Responses = _context.UserQuestions
-                            .Where(ua => ua.QuestionID == questionID)
-                            .ToList();
+            var responses = await _context.GetUserQuestionsAsync();
+
+            Responses = (IEnumerable<UserQuestion>) responses.Where(ua => ua.QuestionID == questionID)
+                                                    .ToList();
 
             return Page();
         }
@@ -53,7 +53,7 @@ namespace QuoraClone.Pages_Question
             // TODO: Preferably check that the user is valid etc...
             if (!ModelState.IsValid) 
             {
-                OnGet(UserQuestion.QuestionID);
+                await OnGet(UserQuestion.QuestionID);
                 return Page();
             }
 

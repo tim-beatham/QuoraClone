@@ -13,13 +13,8 @@ namespace QuoraClone.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int QuestionID { get; set; }
         
-        [Required]
+        [Required(ErrorMessage = "You must specify a question")]
         public string QuestionTitle { get; set; }
 
-        [Required]
-        public UserQuestion QuestionBody { get; set; }
-
-        [Required]
-        public ICollection<UserQuestion> Responses { get; set; }
     }
 }

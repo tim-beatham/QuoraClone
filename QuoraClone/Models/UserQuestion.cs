@@ -10,7 +10,6 @@ namespace QuoraClone.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserQuestionID { get; set; }
 
-        [Required]
         public Question QuestionAnswered { get; set; }
 
         [Required]
@@ -19,10 +18,36 @@ namespace QuoraClone.Models
         [Required]
         public int QuestionID { get; set; }
 
-        [Required]
         public User User { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "You must provide a message")]
         public string Payload { get; set; }
+
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            //
+            // See the full list of guidelines at
+            //   http://go.microsoft.com/fwlink/?LinkID=85237
+            // and also the guidance for operator== at
+            //   http://go.microsoft.com/fwlink/?LinkId=85238
+            //
+            
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            
+            UserQuestion other = (UserQuestion) obj;
+
+            // TODO: write your implementation of Equals() here
+             return Username == other.Username && QuestionID == other.QuestionID;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
